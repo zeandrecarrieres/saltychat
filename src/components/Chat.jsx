@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import firebase, { auth, db } from '../services/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import ChatMessage from './ChatMessage'
 
 function Chat() {
+    const scroller = useRef()
+
     const messagesRef = db.collection('messages')
     const query = messagesRef.orderBy('createdAt').limitToLast(25)
 
@@ -21,8 +23,12 @@ function Chat() {
             uid, photoURL, displayName
         })
 
-        setFormValue()
+        setFormValue('')
     }
+
+    useEffect(()=>{
+        scroller.current.scrollIntoView({behavior:'smooth'})   
+    },[messages])
 
     return (
         <>
@@ -30,6 +36,7 @@ function Chat() {
                 {messages && messages.map((msg)=>
                     <ChatMessage key={msg.id} message={msg} />
                 )}
+                <span ref={scroller}></span>
             </main>
             <form onSubmit={sendMessage}>
                 <input className="input" type="text" value={formValue} onChange={(e)=> setFormValue(e.target.value)} placeholder="Say something..."/>
