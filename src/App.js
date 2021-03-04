@@ -11,7 +11,7 @@ import Chat from './components/Chat'
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useAuthState(auth())
   return (
     <div className="App">
      <header>

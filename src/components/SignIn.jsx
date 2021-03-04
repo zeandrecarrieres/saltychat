@@ -6,7 +6,7 @@ function SignIn() {
         auth().signInWithPopup(provider)
     }
     return (
-     <button onClick={signInWithGoogle}>Sign in with Google</button>
+     <button onClick={signInWithGoogle} className="sign-in-btn">Sign in with Google</button>
     )
 }
 
